@@ -1,0 +1,14 @@
+# 빌드 산출물 (GitHub Actions가 생성·배포)
+dist/
+
+# 파이썬
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

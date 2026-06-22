@@ -1,0 +1,61 @@
+name: Publish (build & deploy to GitHub Pages)
+
+# 1) data/build 변경을 push할 때
+# 2) 매주 새 호 생성(weekly-issue) 워크플로우가 끝난 직후
+# 3) 매주 월요일 아침(KST) 자동 재빌드·배포(안전망)
+# 4) 수동 실행(Actions 탭의 Run workflow)
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+      - "assets/**"
+      - "build.py"
+      - ".github/workflows/publish.yml"
+  workflow_run:
+    # weekly-issue 가 봇 커밋을 push해도 GITHUB_TOKEN push는 push 트리거를
+    # 발생시키지 않으므로, 그 워크플로우 완료 직후 이 워크플로우를 실행한다.
+    workflows: ["Weekly issue (generate next issue)"]
+    types: [completed]
+  schedule:
+    # 매주 월요일 00:10 KST = 일요일 15:10 UTC
+    - cron: "10 15 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 동시에 한 번만 배포
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build static site
+        run: python build.py
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

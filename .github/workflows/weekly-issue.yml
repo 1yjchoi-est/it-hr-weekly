@@ -1,0 +1,57 @@
+name: Weekly issue (generate next issue)
+
+# 매주 새 호를 자동 생성해 커밋한다.
+#  - Secrets에 ANTHROPIC_API_KEY가 있으면: Claude API로 리서치·작성(자동 콘텐츠)
+#  - 없으면: 빈 초안 생성(사람이 채우는 용도)
+# 커밋이 data/** 를 바꾸므로 publish.yml 이 이어서 빌드·배포한다.
+on:
+  schedule:
+    # 매주 월요일 00:00 KST = 일요일 15:00 UTC (publish 스케줄보다 약간 먼저)
+    - cron: "0 15 * * 0"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "발행일(YYYY-MM-DD, 비우면 오늘)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate issue
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ISSUE_DATE: ${{ github.event.inputs.date }}
+        run: |
+          DATE_ARG=""
+          if [ -n "$ISSUE_DATE" ]; then DATE_ARG="--date $ISSUE_DATE"; fi
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "ANTHROPIC_API_KEY 감지 → Claude API로 자동 생성"
+            pip install --quiet anthropic
+            python scripts/generate_issue.py $DATE_ARG
+          else
+            echo "API 키 없음 → 빈 초안 생성"
+            python scripts/new_issue.py $DATE_ARG
+          fi
+
+      - name: Commit new issue
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/issues
+          if git diff --cached --quiet; then
+            echo "변경 없음 — 커밋 생략"
+          else
+            git commit -m "chore: add weekly issue $(date -u +%Y-%m-%d)"
+            git push
+          fi

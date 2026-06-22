@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "it-hr-weekly",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["C:\\Users\\EST\\OneDrive - 이스트소프트\\바탕 화면\\클로드 코드 실습\\HR실무(클로드)\\it-hr-weekly\\build.py", "--serve"],
+      "port": 8000
+    }
+  ]
+}

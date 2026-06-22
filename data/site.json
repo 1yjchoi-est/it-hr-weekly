@@ -1,0 +1,13 @@
+{
+  "title": "IT HR 위클리",
+  "tagline": "IT 기업을 위한 주간 HR·노무·법령 뉴스레터",
+  "description": "매주 월요일, IT·테크 기업 HR 담당자가 꼭 알아야 할 노무 이슈와 법령 개정 사항을 사례 중심으로 정리해 드립니다.",
+  "publisher": "이스트소프트 HR",
+  "editorEmail": "1yjchoi@estsoft.com",
+  "baseUrl": "",
+  "accent": "#4f46e5",
+  "accentDark": "#3730a3",
+  "locale": "ko-KR",
+  "subscribeNote": "사내 메일링 리스트로 매주 발송됩니다. 구독·해지는 HR팀으로 문의하세요.",
+  "disclaimer": "본 뉴스레터는 공개된 자료를 수집·요약한 일반 정보이며 법률 자문이 아닙니다. 실제 적용 전 링크된 원문과 사내·외부 노무 자문으로 사실관계를 반드시 확인하시기 바랍니다."
+}
