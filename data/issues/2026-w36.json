@@ -1,0 +1,51 @@
+{
+  "issueNumber": 11,
+  "slug": "2026-w36",
+  "weekLabel": "2026년 9월 1주차",
+  "date": "2026-09-06",
+  "headline": "(제목을 입력하세요) — 이번 주 IT HR 핵심 이슈",
+  "intro": "(이번 주 호 편집자 인트로를 3~4문장으로 작성하세요.)",
+  "sections": [
+    {
+      "title": "이번 주 핵심 — 법령·지침",
+      "emoji": "⚖️",
+      "items": [
+        {
+          "headline": "(항목 제목)",
+          "category": "법령개정",
+          "effectiveDate": "(시행/발표일)",
+          "summary": "(무슨 일인지 2~4문장)",
+          "whatChanged": "(바뀐 핵심 사실·수치)",
+          "itImpact": "(IT 인사 담당자가 무엇을 해야 하는가)",
+          "sources": [
+            {
+              "name": "출처명",
+              "url": "https://example.com"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "lawWatch": [
+    {
+      "law": "(법령/법안)",
+      "status": "(상태)",
+      "effectiveDate": "(시점)",
+      "note": "(한줄 메모)",
+      "url": "https://example.com"
+    }
+  ],
+  "quickStats": [
+    {
+      "value": "(수치)",
+      "label": "(설명)",
+      "url": "https://example.com"
+    }
+  ],
+  "actionItems": [
+    "(이번 주 HR 실무 체크리스트 항목)"
+  ],
+  "_draft": true,
+  "_todo": "이 파일의 내용을 채운 뒤 '_draft'/'_todo' 키를 삭제하고 커밋하세요."
+}
